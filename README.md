@@ -275,31 +275,6 @@ Thin wrappers under each folder (`run.sh`, `run_attr.sh`, …) source `configs/p
 
 ---
 
-## 7. Smoke check (verified)
-
-With pool up on port `8001`:
-
-```bash
-source configs/paths.env
-export FORCE=1   # overwrite previous out/
-
-PY=python   # or your env's python with aiohttp / Pillow
-PORTS="--ports 8001"
-COMMON="--model qwen3vl_8b --datasets screenspot_v2 --limit 3 $PORTS"
-
-$PY baseline/exp_baseline.py $COMMON
-$PY visual_scaling/exp_crop.py $COMMON
-$PY instruction/exp_instruction.py $COMMON
-$PY instruction/exp_language.py $COMMON
-$PY sampling/exp_sample.py $COMMON --k 4 --temperature 0.7
-$PY sampling/exp_uncertainty.py $COMMON --k 4 --temperature 0.7 --conds base
-$PY visual_scaling/analyze_target_size.py --model qwen3vl_8b --datasets screenspot_v2 --limit 20
-```
-
-Expected: JSON files under `out/qwen3vl_8b/` and non-zero `n` with `parse_fail` near 0 for a working Qwen3-VL computer_use setup.
-
----
-
 ## Layout
 
 ```
